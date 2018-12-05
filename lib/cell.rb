@@ -34,8 +34,17 @@ def fire_upon
   end
 end
 
-def render
-  @status
-end
-
+  def render
+    if fired_upon? == true
+      if @ship != nil && @ship.health != 0
+        @status = 'H'
+      elsif @ship != nil && @ship.health == 0
+        @status = 'X'
+      else
+        @status = "M"
+      end
+    elsif fired_upon? == false
+      @status
+    end
+  end
 end

@@ -67,10 +67,9 @@ end
 
 def test_that_status_is_rendered_as_a_dot
   cell_1 = Cell.new("B4")
-
+  cruiser = Ship.new("Cruiser", 3)
   assert_equal ".", cell_1.render
 end
-
 
 
 end

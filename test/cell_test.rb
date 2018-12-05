@@ -98,6 +98,13 @@ def test_that_cell_shows_X_when_ship_is_sunk
 
 end
 
+def test_that_cell_shows_an_S_when_needed
+  cell_1 = Cell.new("B4")
+  cruiser = Ship.new("Cruiser", 3)
+  cell_1.place_ship(cruiser)
+  assert_equal "S", cell_1.render(true)
+end
+
 
 
 end

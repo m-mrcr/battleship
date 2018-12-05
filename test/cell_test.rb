@@ -19,7 +19,7 @@ class CellTest < Minitest::Test
 
   def test_ship_returns_nil_at_the_beginning
     cell = Cell.new("B4")
-    assert nil cell.ship
+    assert_nil cell.ship
   end
 
   def test_cell_is_empty_when_initialized
@@ -67,9 +67,44 @@ end
 
 def test_that_status_is_rendered_as_a_dot
   cell_1 = Cell.new("B4")
-  cruiser = Ship.new("Cruiser", 3)
   assert_equal ".", cell_1.render
 end
+
+def test_that_cell_shows_when_a_ship_was_hit
+  cell_1 = Cell.new("B4")
+  cruiser = Ship.new("Cruiser", 3)
+  cell_1.place_ship(cruiser)
+  cell_1.fire_upon
+
+  assert_equal "H", cell_1.render
+end
+
+def test_that_cell_shows_when_a_shot_missed
+  cell_1 = Cell.new("B4")
+  cruiser = Ship.new("Cruiser", 3)
+  cell_1.fire_upon
+  assert_equal "M", cell_1.render
+end
+
+def test_that_cell_shows_X_when_ship_is_sunk
+  cell_1 = Cell.new("B4")
+  cruiser = Ship.new("Cruiser", 3)
+  cell_1.place_ship(cruiser)
+  cruiser.hit
+  cruiser.hit
+  cell_1.fire_upon
+
+  assert_equal "X", cell_1.render
+
+end
+
+def test_that_cell_shows_an_S_when_needed
+  cell_1 = Cell.new("B4")
+  cruiser = Ship.new("Cruiser", 3)
+  cell_1.place_ship(cruiser)
+  assert_equal "S", cell_1.render(true)
+end
+
 
 
 end

@@ -28,6 +28,24 @@ class BoardTest < MiniTest::Test
     board.cells.values.all? do |value|
       value.class == Cell
     end
-
   end
+
+  def test_that_validates_coordinates_true
+    board = Board.new
+    board.cells
+
+    assert_equal true, board.valid_coordinate?("A1")
+  end
+
+  def test_that_validates_coordinates_false
+    board = Board.new
+    board.cells
+
+    assert_equal false, board.valid_coordinate?("A5")
+    assert_equal false, board.valid_coordinate?("E1")
+    assert_equal false, board.valid_coordinate?("A22")
+  end
+
+
+
 end

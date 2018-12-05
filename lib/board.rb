@@ -1,7 +1,13 @@
 class Board
 
-  def cells
-    cells = Hash.new
+  attr_reader :cells
+
+  def initialize
+    @cells = Hash.new
+    create_cells
+  end
+
+  def create_cells
     letter_coordinates = ("A".."D").to_a
     number_coordinates = (1..4).to_a
 
@@ -9,9 +15,17 @@ class Board
 
         number_coordinates.each do |number|
           coordinate = "#{letter}#{number}"
-          cells[coordinate] = Cell.new(coordinate)
+          @cells[coordinate] = Cell.new(coordinate)
         end
       end
-  cells
+  @cells
   end
+
+  def valid_coordinate?(coordinate)
+    cells.any? do |key, value|
+      key == coordinate
+    end
+  end
+
+
 end

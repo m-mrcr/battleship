@@ -34,7 +34,20 @@ def fire_upon
   end
 end
 
-  def render
+  def render(show_ship = false)
+    if show_ship == false
+      if fired_upon? == true
+        if @ship != nil && @ship.health != 0
+          @status = 'H'
+        elsif @ship != nil && @ship.health == 0
+          @status = 'X'
+        else
+          @status = "M"
+        end
+      elsif fired_upon? == false
+        @status
+      end
+  else
     if fired_upon? == true
       if @ship != nil && @ship.health != 0
         @status = 'H'
@@ -44,7 +57,9 @@ end
         @status = "M"
       end
     elsif fired_upon? == false
-      @status
+      @status = "S"
+    end
     end
   end
-end
+
+end 

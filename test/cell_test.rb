@@ -19,7 +19,7 @@ class CellTest < Minitest::Test
 
   def test_ship_returns_nil_at_the_beginning
     cell = Cell.new("B4")
-    assert_nil cell.ship
+    assert nil cell.ship
   end
 
   def test_cell_is_empty_when_initialized

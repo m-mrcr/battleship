@@ -24,7 +24,6 @@ class BoardTest < MiniTest::Test
   end
 
   def test_that_coordinates_map_to_cells
-    
     board = Board.new
     board.cells.values.all? do |value|
       value.class == Cell

@@ -22,10 +22,17 @@ class Board
   end
 
   def valid_coordinate?(coordinate)
-    cells.any? do |key, value|
-      key == coordinate
+    cells.has_key?(coordinate)
+  end
+
+  def valid_placement?(ship, coordinates)
+    if ship.length == coordinates.length
+      true
+    else
+      false
     end
   end
 
+  def 
 
 end

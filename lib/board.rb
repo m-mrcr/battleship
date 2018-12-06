@@ -28,15 +28,12 @@ class Board
   end
 
   def get_orientation(coordinates)
-
     letters = coordinates.map do |coordinate|
       coordinate[0]
     end
-
     numbers = coordinates.map do |coordinate|
       coordinate[1]
     end
-
 
 
     if letters.all? {|letter| letter == letters[0] }
@@ -49,37 +46,46 @@ class Board
       return :diagonal
     end
 
-
-
-
-
   end
 
 
   def valid_placement?(ship, coordinates)
+    letters = coordinates.map do |coordinate|
+      coordinate[0]
+    end
+    numbers = coordinates.map do |coordinate|
+      coordinate[1].to_i
+    end
+
+
     if ship.length != coordinates.length
       return false
     end
 
+    orientation = get_orientation(coordinates)
 
-      #return falase
+    if orientation == :horizontal
+       numbers.each_cons(2) do |first, second|
+           if second != first + 1
+             return false
+           end
+         end
+         
+         return true
 
-    # orientation = get_orientation(coordinates)
-    #
-    # if orientation == :horizontal
-    #
-    # elsif orientation == :vertical
-    #
-    # else
-    #   return false
-    # end
-
-
+    elsif orientation == :vertical
 
 
-
-
-
+    else
+      return false
+    end
   end
+
+
+
+
+
+
+
 
 end

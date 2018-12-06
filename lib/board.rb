@@ -41,9 +41,6 @@ class Board
 
     elsif numbers.all? {|number| number == numbers[0] }
       return :vertical
-
-    else
-      return :diagonal
     end
 
   end
@@ -51,7 +48,7 @@ class Board
 
   def valid_placement?(ship, coordinates)
     letters = coordinates.map do |coordinate|
-      coordinate[0]
+      coordinate[0].ord
     end
     numbers = coordinates.map do |coordinate|
       coordinate[1].to_i
@@ -70,16 +67,26 @@ class Board
              return false
            end
          end
-         
+
          return true
 
     elsif orientation == :vertical
+      letters.each_cons(2) do |first, second|
+          if second != first + 1
+            return false
+          end
+        end
 
+        return true
 
     else
       return false
     end
   end
+
+
+
+  
 
 
 

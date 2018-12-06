@@ -1,6 +1,8 @@
 class Board
 
-  attr_reader :cells
+  attr_reader :cells,
+              :letter_coordinates,
+              :number_coordinates
 
   def initialize
     @cells = Hash.new
@@ -25,14 +27,59 @@ class Board
     cells.has_key?(coordinate)
   end
 
-  def valid_placement?(ship, coordinates)
-    if ship.length == coordinates.length
-      true
-    else
-      false
+  def get_orientation(coordinates)
+
+    letters = coordinates.map do |coordinate|
+      coordinate[0]
     end
+
+    numbers = coordinates.map do |coordinate|
+      coordinate[1]
+    end
+
+
+
+    if letters.all? {|letter| letter == letters[0] }
+      return :horizontal
+
+    elsif numbers.all? {|number| number == numbers[0] }
+      return :vertical
+
+    else
+      return :diagonal
+    end
+
+
+
+
+
   end
 
-  def 
+
+  def valid_placement?(ship, coordinates)
+    if ship.length != coordinates.length
+      return false
+    end
+
+
+      #return falase
+
+    # orientation = get_orientation(coordinates)
+    #
+    # if orientation == :horizontal
+    #
+    # elsif orientation == :vertical
+    #
+    # else
+    #   return false
+    # end
+
+
+
+
+
+
+
+  end
 
 end

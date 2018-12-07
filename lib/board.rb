@@ -1,3 +1,4 @@
+require './lib/cell'
 class Board
 
   attr_reader :cells,
@@ -97,23 +98,22 @@ def place(ship, coordinates)
 
     coordinates.each do |coordinate|
       @cells[coordinate].place_ship(ship)
-
     end
 
   else
-    'Not a valid placement.'
+    "You can't put a ship here."
   end
-
 end
 
 
+  def render(show_ships = false)
 
+      "  1 2 3 4 \n" +
+      "A #{@cells["A1"].render} . . . \n" +
+      "B . . . . \n" +
+      "C . . . . \n" +
+      "D . . . . \n"
 
-
-
-
-
-
-
+  end
 
 end

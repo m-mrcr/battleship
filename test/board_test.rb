@@ -137,9 +137,12 @@ class BoardTest < MiniTest::Test
 
   def test_it_can_render
     board = Board.new
-
-    expected = "  1 2 3 4 \nA . . . . \nB . . . . \nC . . . . \nD . . . . \n"
     binding.pry
+
+    expected = "  1 2 3 4 \nA . . . . \nB . . . . \nC . . . . \nD . . . ."
+
+
+
     assert_equal expected, board.render
 
   end

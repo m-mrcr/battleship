@@ -60,6 +60,7 @@ end
       @status = "S"
     end
     end
+    @status
   end
 
 end

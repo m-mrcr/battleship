@@ -59,6 +59,12 @@ class Board
       return false
     end
 
+    if coordinates.any? do |coordinate|
+      @cells[coordinate].ship != nil
+      end
+      return false
+    end
+
     orientation = get_orientation(coordinates)
 
     if orientation == :horizontal
@@ -95,10 +101,12 @@ def place(ship, coordinates)
     end
 
   else
-    print 'Not a valid placement.'
+    'Not a valid placement.'
   end
 
 end
+
+
 
 
 

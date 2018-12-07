@@ -68,6 +68,14 @@ class BoardTest < MiniTest::Test
     assert_equal :vertical, board.get_orientation(["A1", "B1", "C1"])
   end
 
+  def test_it_cannot_have_ships_in_diagonal_orientation
+    board = Board.new
+    cruiser = Ship.new("Cruiser", 3)
+    submarine = Ship.new("Submarine", 2)
+
+    assert_equal false, board.valid_placement?(cruiser, ["A1", "B2", "C3"])
+  end
+
   def test_that_coordinates_and_placement_match_ship_length
 
 
@@ -107,7 +115,6 @@ class BoardTest < MiniTest::Test
     cell_1 = board.cells["A1"]
     cell_2 = board.cells["A2"]
     cell_3 = board.cells["A3"]
-    binding.pry
 
     board.place(cruiser, ["A1", "A2", "A3"])
 
@@ -117,9 +124,15 @@ class BoardTest < MiniTest::Test
     assert_equal cruiser, cell_3.ship
 
     assert_equal true, cell_3.ship == cell_2.ship
+  end
 
+  def test_it_cannot_have_overlapping_ships
+    board = Board.new
+    cruiser = Ship.new("Cruiser", 3)
+    submarine = Ship.new("Submarine", 2)
+    board.place(cruiser, ["A1", "A2", "A3"])
 
-
+    assert_equal "Not a valid placement.", board.place(submarine, ["A1", "A2"])
   end
 
 

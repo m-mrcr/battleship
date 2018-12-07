@@ -108,12 +108,33 @@ end
 
   def render(show_ships = false)
 
-      "  1 2 3 4 \n" +
-      "A #{@cells["A1"].render} . . . \n" +
-      "B . . . . \n" +
-      "C . . . . \n" +
-      "D . . . . \n"
+      first_row = "  1 2 3 4 \nA"
+      third_row = "\nB"
+      fourth_row = "\nC"
+      fifth_row = "\nD"
+
+      without_cells = [first_row, third_row, fourth_row, fifth_row]
+      with_cells = []
+
+      cells =  @cells.values
+
+      if show_ships == false
+        cells.each do |cell|
+        with_cells << cell.render
+        end
+     else
+        cells.each do |cell|
+        with_cells << cell.render(true)
+        end
+      end
+
+     rendered_cells = with_cells.each_slice(4).to_a
+
+     without_cells.zip(rendered_cells).flatten.join(' ')
+
 
   end
+
+
 
 end

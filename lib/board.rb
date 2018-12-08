@@ -1,3 +1,4 @@
+require './lib/cell'
 class Board
 
   attr_reader :cells,
@@ -59,6 +60,12 @@ class Board
       return false
     end
 
+    if coordinates.any? do |coordinate|
+      @cells[coordinate].ship != nil
+      end
+      return false
+    end
+
     orientation = get_orientation(coordinates)
 
     if orientation == :horizontal
@@ -85,13 +92,48 @@ class Board
   end
 
 
+def place(ship, coordinates)
 
-  
+  if valid_placement?(ship, coordinates)
+
+    coordinates.each do |coordinate|
+      @cells[coordinate].place_ship(ship)
+    end
+
+  else
+    "You can't put a ship here."
+  end
+end
 
 
+  def render(show_ships = false)
+
+      first_row = "  1 2 3 4 \nA"
+      third_row = "\nB"
+      fourth_row = "\nC"
+      fifth_row = "\nD"
+
+      without_cells = [first_row, third_row, fourth_row, fifth_row]
+      with_cells = []
+
+      cells =  @cells.values
+
+      if show_ships == false
+        cells.each do |cell|
+        with_cells << cell.render
+        end
+     else
+        cells.each do |cell|
+        with_cells << cell.render(true)
+        end
+      end
+
+     rendered_cells = with_cells.each_slice(4).to_a
+
+     without_cells.zip(rendered_cells).flatten.join(' ')
 
 
-
+  end
 
 
 

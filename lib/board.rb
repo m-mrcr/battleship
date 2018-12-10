@@ -118,14 +118,13 @@ end
 
       cells =  @cells.values
 
+      cells.each do |cell|
+
       if show_ships == false
-        cells.each do |cell|
         with_cells << cell.render
-        end
-     else
-        cells.each do |cell|
+      else
         with_cells << cell.render(true)
-        end
+      end
       end
 
      rendered_cells = with_cells.each_slice(4).to_a

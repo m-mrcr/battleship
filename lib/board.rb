@@ -42,12 +42,43 @@ class Board
 
     elsif numbers.all? {|number| number == numbers[0] }
       return :vertical
+
+    else
+      return :diagonal
     end
 
   end
 
+  def are_the_coordinates_in_the_board?(coordinates)
+    if coordinates.all? do |coordinate| #test if all coords are in board
+      valid_coordinate?(coordinate)
+      end
+      return true
+    else
+      return false
+    end
+  end
+
 
   def valid_placement?(ship, coordinates)
+
+    if are_the_coordinates_in_the_board?(coordinates) == false
+      return false
+    end
+    
+    if ship.length != coordinates.length   #test if coords are the right length
+      return false
+    end
+
+    if coordinates.any? do |coordinate| #test if any has a ship already
+      @cells[coordinate].ship != nil
+      end
+      return false
+    end
+
+
+    orientation = get_orientation(coordinates)
+
     letters = coordinates.map do |coordinate|
       coordinate[0].ord
     end
@@ -55,18 +86,6 @@ class Board
       coordinate[1].to_i
     end
 
-
-    if ship.length != coordinates.length
-      return false
-    end
-
-    if coordinates.any? do |coordinate|
-      @cells[coordinate].ship != nil
-      end
-      return false
-    end
-
-    orientation = get_orientation(coordinates)
 
     if orientation == :horizontal
        numbers.each_cons(2) do |first, second|

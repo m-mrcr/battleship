@@ -16,4 +16,5 @@ class Player
   def add_ships
     @ships = {submarine: Ship.new("Submarine", 2), cruiser: Ship.new("Cruiser", 3) }
   end
+  
 end

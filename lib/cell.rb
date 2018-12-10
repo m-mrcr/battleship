@@ -34,33 +34,19 @@ def fire_upon
   end
 end
 
-  def render(show_ship = false)
-    if show_ship == false
-      if fired_upon? == true
-        if @ship != nil && @ship.health != 0
-          @status = 'H'
-        elsif @ship != nil && @ship.health == 0
-          @status = 'X'
-        else
-          @status = "M"
-        end
-      elsif fired_upon? == false
-        @status
-      end
-  else
-    if fired_upon? == true
-      if @ship != nil && @ship.health != 0
-        @status = 'H'
-      elsif @ship != nil && @ship.health == 0
-        @status = 'X'
-      else
-        @status = "M"
-      end
-    elsif fired_upon? == false
-      @status = "S"
-    end
-    end
-    @status
+def render(show_ship = false)
+  case
+    when empty? == false && @ship.sunk? == true
+      @status = 'X'
+    when empty? == false && fired_upon? == true
+      @status = 'H'
+    when empty? == true && fired_upon? == true
+      @status = 'M'
+    when empty? == false && show_ship == true
+      @status = 'S'
+    else
+      @status
   end
+end
 
 end

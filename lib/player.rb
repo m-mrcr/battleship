@@ -9,14 +9,11 @@ class Player
   def initialize(name)
     @name = name
     @board = Board.new
-    @ships = []
+    @ships = Hash.new
     add_ships
   end
 
   def add_ships
-    submarine = Ship.new("Submarine", 2)
-    cruiser = Ship.new("Cruiser", 3)
-    @ships << submarine
-    @ships << cruiser
+    @ships = {submarine: Ship.new("Submarine", 2), cruiser: Ship.new("Cruiser", 3) }
   end
 end

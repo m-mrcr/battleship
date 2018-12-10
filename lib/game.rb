@@ -35,8 +35,6 @@ class Game
   def start_game
     @computer = Player.new(:computer)
     @player = Player.new(:human)
-
-
   end
 
   def setup
@@ -51,19 +49,19 @@ class Game
     puts @human.board.render
 
     loop do
-    puts "Enter the squares for the Cruiser (3 spaces). Ex: (A1, A2, A3) \n"
-    input = gets.chomp.upcase
-    input_cruiser = input.split
+      puts "Enter the squares for the Cruiser (3 spaces). Ex: (A1, A2, A3) \n"
+      input = gets.chomp.upcase
+      input_cruiser = input.split
 
 
-    if @human.board.valid_placement?(@human.ships[:cruiser], input_cruiser) == true
-      @human.board.place(@human.ships[:cruiser], input_cruiser)
-      @human.board.render(true)
-      break
-    else
-      puts "Those are invalid coordinates. Please try again."
-    end
-  end #end loop
+      if @human.board.valid_placement?(@human.ships[:cruiser], input_cruiser) == true
+        @human.board.place(@human.ships[:cruiser], input_cruiser)
+        @human.board.render(true)
+        break
+      else
+        puts "Those are invalid coordinates. Please try again."
+      end
+    end #end loop
 
   loop do
     puts "Enter the squares for the Submarine (2 spaces): \n"
@@ -91,28 +89,29 @@ class Game
 
       loop do
 
-      trial_coordinates = @computer.board.cells.keys.sample(ship.length)
+        trial_coordinates = @computer.board.cells.keys.sample(ship.length)
 
-      # while @computer.board.valid_placement?(ship, trial_coordinates) == false
-      #   trial_coordinates = @computer.board.cells.keys.sample(ship.length)
-      # end #ends while
+        if @computer.board.valid_placement?(ship, trial_coordinates) == true
+          @computer.board.place(ship, trial_coordinates)
+          puts " The computer has placed its #{name_of_ship}."
+          break
+        end
 
-      if @computer.board.valid_placement?(ship, trial_coordinates) == true
-        @computer.board.place(ship, trial_coordinates)
-        puts " The computer has placed its #{name_of_ship}."
-        break
-      end
-
-    end #end of loop do
-
-  end #ends each
+      end #end of loop do
+    end #ends each
   end #end of place ships ai method
-
-
 
 end #ends class
 
-
+game = Game.new
+game.setup
+turn = Turn.new(@human, @computer)
+loop do
+  turn.display_boards
+  turn.player_chooses_coordinate
+  turn.computer_chooses_coordinate
+  break if turn.computer_won == true || turn.player_won == true
+end
 
 
 binding.pry

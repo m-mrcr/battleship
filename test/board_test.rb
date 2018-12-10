@@ -34,7 +34,7 @@ class BoardTest < MiniTest::Test
     end
   end
 
-  def test_that_validates_coordinates_true
+  def test_it_can_tell_if_a_coordinate_is_in_the_board
 
     board = Board.new
     board.cells
@@ -42,7 +42,7 @@ class BoardTest < MiniTest::Test
     assert_equal true, board.valid_coordinate?("A1")
   end
 
-  def test_that_validates_coordinates_false
+  def test_that_it_can_tell_if_a_coordinate_is_not_in_the_board
 
     board = Board.new
     board.cells
@@ -50,6 +50,14 @@ class BoardTest < MiniTest::Test
     assert_equal false, board.valid_coordinate?("A5")
     assert_equal false, board.valid_coordinate?("E1")
     assert_equal false, board.valid_coordinate?("A22")
+  end
+
+  def test_it_can_tell_if_all_coordinates_are_in_a_board
+    board = Board.new
+    board.cells
+
+    assert_equal true, board.are_the_coordinates_in_the_board?(["A1", "B2", "C4"])
+    assert_equal false, board.are_the_coordinates_in_the_board?(["A6", "B2", "D1"])
   end
 
   def test_it_can_get_horizontal_orientation
@@ -69,6 +77,7 @@ class BoardTest < MiniTest::Test
   end
 
   def test_it_cannot_have_ships_in_diagonal_orientation
+
     board = Board.new
     cruiser = Ship.new("Cruiser", 3)
     submarine = Ship.new("Submarine", 2)
@@ -109,6 +118,7 @@ class BoardTest < MiniTest::Test
   end
 
   def test_it_can_place_a_ship
+
     board = Board.new
     cruiser = Ship.new("Cruiser", 3)
 
@@ -127,6 +137,7 @@ class BoardTest < MiniTest::Test
   end
 
   def test_it_cannot_have_overlapping_ships
+
     board = Board.new
     cruiser = Ship.new("Cruiser", 3)
     submarine = Ship.new("Submarine", 2)
@@ -136,6 +147,7 @@ class BoardTest < MiniTest::Test
   end
 
   def test_it_can_render
+
     board = Board.new
 
     expected = "  1 2 3 4 \nA . . . . \nB . . . . \nC . . . . \nD . . . ."

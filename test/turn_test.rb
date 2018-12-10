@@ -1,0 +1,6 @@
+require 'minitest/autorun'
+require 'minitest/pride'
+require 'pry'
+require './lib/cell'
+require './lib/ship'
+require './lib/turn'

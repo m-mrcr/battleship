@@ -111,9 +111,9 @@ class GamePlay
 
   def end_game_announcement
     if player_won
-      puts "Congratulations, you won! \n"
+      puts "\n ------------ \n \n Congratulations, you won! \n \n ------------ \n"
     elsif computer_won == true
-      puts "I won. Better luck next time. \n"
+      puts "\n ------------ \n \n I won. Better luck next time. \n \n ------------ \n"
     end
   end
 

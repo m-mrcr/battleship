@@ -1,5 +1,6 @@
 require './lib/cell'
 require './lib/ship'
+require './lib/turn'
 require './lib/player'
 require './lib/board'
 require 'pry'
@@ -7,8 +8,7 @@ require 'pry'
 class Game
 
   attr_reader :computer,
-              :human,
-              :valid
+              :human
 
   def initialize
     @computer = Player.new('computer')
@@ -103,15 +103,17 @@ class Game
 
 end #ends class
 
-game = Game.new
-game.setup
-turn = Turn.new(@human, @computer)
-loop do
-  turn.display_boards
-  turn.player_chooses_coordinate
-  turn.computer_chooses_coordinate
-  break if turn.computer_won == true || turn.player_won == true
-end
+  game = Game.new
+  game.setup
+  # binding.pry
+  turn = Turn.new(game.human, game.computer)
+  loop do
+    turn.display_boards
+    turn.player_chooses_coordinate
+    turn.computer_chooses_coordinate
 
-
-binding.pry
+    if turn.computer_won == true || turn.player_won == true
+      turn.end_game_announcement
+    break
+    end
+  end

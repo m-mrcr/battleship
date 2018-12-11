@@ -22,9 +22,17 @@ class Turn
       puts "Enter the coordinate for your shot: \n"
       input = gets.upcase.chomp
 
+      already_fired_upon_coordinates = []
+
       loop do
+        if already_fired_upon_coordinates.include?(input)
+          puts "This coordinate has already been fired upon. Please choose another."
+          next
+        end
+
         if @computer.board.valid_coordinate?(input)
           @computer.board.cells[input].fire_upon
+          already_fired_upon_coordinates.push(input)
           break
         else
           puts "Please enter a valid coordinate: "
@@ -35,12 +43,12 @@ class Turn
 
       case status
 
-      when 'H'
-        puts "Your shot on #{input} was a hit."
-      when 'M'
-        puts "Your shot on #{input} was a miss."
-      when 'X'
-        puts "Your shot on #{input} sunk a ship."
+        when 'H'
+          puts "Your shot on #{input} was a hit."
+        when 'M'
+          puts "Your shot on #{input} was a miss."
+        when 'X'
+          puts "Your shot on #{input} sunk a ship."
       end #ends case
 
 
@@ -91,7 +99,7 @@ class Turn
   end #end of player won method
 
   def computer_won
-    if @player.ships.all? do |name_of_ship, ship|
+    if @human.ships.all? do |name_of_ship, ship|
       ship.sunk? == true
       end
       return true

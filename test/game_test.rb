@@ -15,8 +15,6 @@ class GameTest < MiniTest::Test
 
   end
 
-  def test
 
-  end
 
 end

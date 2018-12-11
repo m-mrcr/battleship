@@ -1,6 +1,7 @@
 require './lib/cell'
 require './lib/ship'
 require './lib/game_play'
+
 require './lib/player'
 require './lib/board'
 require 'pry'
@@ -8,7 +9,8 @@ require 'pry'
 class Game
 
   attr_reader :computer,
-              :human
+              :human,
+              :valid
 
   def initialize
     @computer = Player.new('computer')
@@ -36,12 +38,14 @@ class Game
     @player = Player.new(:human)
   end
 
+
   def setup
     place_ships_ai
     place_ships_user
   end
 
-  def place_ships_user
+
+def place_ships_user
     puts "I have laid out my ships on the grid."
     puts "You now need to lay out your two ships."
     puts "The Cruiser is two units long and the Submarine is three units long."
@@ -79,7 +83,7 @@ class Game
   puts @human.board.render(true)
 
   end
-
+  
 
   def place_ships_ai
     trial_coordinates = []

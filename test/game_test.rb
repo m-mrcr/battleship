@@ -15,9 +15,6 @@ class GameTest < MiniTest::Test
 
   end
 
-  def test
 
-    binding.pry
-  end
 
 end

@@ -13,24 +13,23 @@ class Game
   def initialize
     @computer = Player.new('computer')
     @human = Player.new('human')
+    self.welcome
   end
 
-  # def welcome
-  #
-  #   puts "Welcome to BATTLESHIP"
-  #   puts "Enter p to play. Enter q to quit"
-  #   input = gets.chomp
-  #
-  #
-  #     if input == "p" || input == "P"
-  #       self.start_game
-  #     elsif input == 'q' || input == "Q"
-  #       exit
-  #     else
-  #       puts 'INVALID INPUT'
-  #       self.welcome
-  #     end
-  # end
+  def welcome
+    puts "Welcome to BATTLESHIP"
+    puts "Enter p to play. Enter q to quit"
+    input = gets.chomp
+
+      if input == "p" || input == "P"
+        self.start_game
+      elsif input == 'q' || input == "Q"
+        exit
+      else
+        puts 'INVALID INPUT'
+        self.welcome
+      end
+  end
 
   def start_game
     @computer = Player.new(:computer)
@@ -49,7 +48,7 @@ class Game
     puts @human.board.render
 
     loop do
-      puts "Enter the squares for the Cruiser (3 spaces). Ex: (A1, A2, A3) \n"
+      puts "Enter the squares for the Cruiser (3 spaces). Ex: (A1 A2 A3) \n"
       input = gets.chomp.upcase
       input_cruiser = input.split
 

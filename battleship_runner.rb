@@ -15,7 +15,10 @@ loop do
   gameplay.computer_chooses_coordinate
 
   if gameplay.computer_won == true || gameplay.player_won == true
+    gameplay.display_boards
     gameplay.end_game_announcement
-  break
+    game = Game.new
+    game.setup
+    gameplay = GamePlay.new(game.human, game.computer)
   end
 end

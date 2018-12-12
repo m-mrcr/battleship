@@ -99,6 +99,15 @@ class BoardTest < MiniTest::Test
     assert_equal true, board.valid_placement?(submarine, ["A1", "A2"])
   end
 
+  def test_it_can_know_if_coordinates_are_consecutive
+    board = Board.new
+    coordinates_1 = ["C1", "D1"]
+    coordinates_2 = ["A2", "A1", "A3"]
+
+    assert_equal true, board.are_the_coordinates_consecutive?(coordinates_1)
+    assert_equal false, board.are_the_coordinates_consecutive?(coordinates_2)
+  end
+
   def test_that_in_valid_placement_coordinates_and_placements_are_consecutive
 
     board = Board.new

@@ -1,41 +1,45 @@
 require './lib/cell'
 class Board
 
-  attr_reader :cells
+  attr_reader :cells,
+              :letter_coordinates,
+              :number_coordinates
 
   def initialize
     @cells = Hash.new
-    create_cells
   end
 
-  def create_cells
-    letter_coordinates = ("A".."D").to_a
-    number_coordinates = (1..4).to_a
+  def create_cells(height, width)
 
-    letter_coordinates.each do |letter|
+    @height = height
+    @width = width
 
-      number_coordinates.each do |number|
+    @letter_coordinates = ("A"..@height).to_a
+    @number_coordinates = (1..@width).to_a
+
+    @letter_coordinates.each do |letter|
+
+      @number_coordinates.each do |number|
         coordinate = "#{letter}#{number}"
         @cells[coordinate] = Cell.new(coordinate)
       end
     end
+    binding.pry
     @cells
   end #end of method
-
 
   def valid_coordinate?(coordinate)
     cells.has_key?(coordinate)
   end
 
-
   def get_orientation(coordinates)
     letters = coordinates.map do |coordinate|
       coordinate[0]
     end
+
     numbers = coordinates.map do |coordinate|
       coordinate[1]
     end
-
 
     if letters.all? {|letter| letter == letters[0] }
       return :horizontal
@@ -139,29 +143,28 @@ end
 
   def render(show_ships = false)
 
-      first_row = "  1 2 3 4 \nA"
-      third_row = "\nB"
-      fourth_row = "\nC"
-      fifth_row = "\nD"
+    @letter_coordinates
+    rendered_board = number_coordinates.join(" ")
 
-      without_cells = [first_row, third_row, fourth_row, fifth_row]
-      with_cells = []
+    @number_coordinates
 
-      cells =  @cells.values
-
-      cells.each do |cell|
-
-      if show_ships == false
-        with_cells << cell.render
-      else
-        with_cells << cell.render(true)
-      end
-      end
-
-     rendered_cells = with_cells.each_slice(4).to_a
-
-     without_cells.zip(rendered_cells).flatten.join(' ')
-
+    with_cells = []
+     #
+     #  cells =  @cells.values
+     #
+     #  cells.each do |cell|
+     #
+     #  if show_ships == false
+     #    with_cells << cell.render
+     #  else
+     #    with_cells << cell.render(true)
+     #  end
+     #  end
+     #
+     # rendered_cells = with_cells.each_slice(4).to_a
+     #
+     # without_cells.zip(rendered_cells).flatten.join(' ')
+     #
 
   end
 

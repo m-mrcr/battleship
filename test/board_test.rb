@@ -131,6 +131,15 @@ class BoardTest < MiniTest::Test
     assert_equal true, cell_3.ship == cell_2.ship
   end
 
+  def test_it_can_tell_if_there_are_already_ships_in_a_set_of_coordinates
+    board = Board.new
+    cruiser = Ship.new("Cruiser", 3)
+    submarine = Ship.new("Submarine", 2)
+    board.place(cruiser, ["A1", "A2", "A3"])
+
+    assert_equal true, board.are_there_already_ships_here?(["A1", "A2", "A3"])
+  end
+
   def test_it_cannot_have_overlapping_ships
 
     board = Board.new
@@ -139,6 +148,13 @@ class BoardTest < MiniTest::Test
     board.place(cruiser, ["A1", "A2", "A3"])
 
     assert_equal false, board.valid_placement?(submarine, ["A1", "B1"])
+  end
+
+  def test_it_can_validate_array_of_coordinates
+    board = Board.new
+
+    assert_equal true, board.are_the_coordinates_in_the_board?(["A2", "B4", "C1"])
+    assert_equal false, board.are_the_coordinates_in_the_board?(["C2", "D3", "D5"])
   end
 
   def test_it_can_render

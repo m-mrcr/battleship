@@ -14,7 +14,7 @@ class GameSetup
   def initialize
     @computer = Player.new(:computer)
     @human = Player.new(:human)
-    welcome
+
   end
 
   def welcome

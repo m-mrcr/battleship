@@ -7,7 +7,7 @@ require './lib/game_setup'
 require 'pry'
 
 game = GameSetup.new
-game.setup
+game.welcome
 gameplay = GamePlay.new(game.human, game.computer)
 loop do
   gameplay.display_boards

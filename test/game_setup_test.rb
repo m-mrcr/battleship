@@ -24,7 +24,6 @@ class GameSetupTest < MiniTest::Test
   end
 
   def test_all_ships_of_computer_get_placed
-    skip
     game = GameSetup.new
 
     game.place_ships_ai

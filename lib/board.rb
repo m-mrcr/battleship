@@ -22,11 +22,13 @@ class Board
         end
       end
   @cells
-  end
+end #end of method
+
 
   def valid_coordinate?(coordinate)
     cells.has_key?(coordinate)
   end
+
 
   def get_orientation(coordinates)
     letters = coordinates.map do |coordinate|
@@ -47,17 +49,29 @@ class Board
       return :diagonal
     end
 
-  end
+  end #end of method
 
   def are_the_coordinates_in_the_board?(coordinates)
     if coordinates.all? do |coordinate| #test if all coords are in board
       valid_coordinate?(coordinate)
+      end #end of do
+      return true
+    else
+      return false
+    end #end of if
+  end #end of method
+
+
+  def are_there_already_ships_here?(coordinates)
+    if coordinates.any? do |coordinate| #test if any of these cells has a ship already
+      !@cells[coordinate].empty?
       end
       return true
     else
       return false
     end
-  end
+  end #end of method
+
 
 
   def valid_placement?(ship, coordinates)
@@ -65,14 +79,12 @@ class Board
     if are_the_coordinates_in_the_board?(coordinates) == false
       return false
     end
-    
+
     if ship.length != coordinates.length   #test if coords are the right length
       return false
     end
 
-    if coordinates.any? do |coordinate| #test if any has a ship already
-      @cells[coordinate].ship != nil
-      end
+    if are_there_already_ships_here?(coordinates)
       return false
     end
 

@@ -3,10 +3,10 @@ require './lib/ship'
 require './lib/game_play'
 require './lib/player'
 require './lib/board'
-require './lib/game'
+require './lib/game_setup'
 require 'pry'
 
-game = Game.new
+game = GameSetup.new
 game.setup
 gameplay = GamePlay.new(game.human, game.computer)
 loop do
@@ -17,7 +17,7 @@ loop do
   if gameplay.computer_won == true || gameplay.player_won == true
     gameplay.display_boards
     gameplay.end_game_announcement
-    game = Game.new
+    game = GameSetup.new
     game.setup
     gameplay = GamePlay.new(game.human, game.computer)
   end

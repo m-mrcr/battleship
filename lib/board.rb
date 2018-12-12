@@ -1,9 +1,7 @@
 require './lib/cell'
 class Board
 
-  attr_reader :cells,
-              :letter_coordinates,
-              :number_coordinates
+  attr_reader :cells
 
   def initialize
     @cells = Hash.new

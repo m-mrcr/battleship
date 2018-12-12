@@ -79,6 +79,7 @@ def place_ships_user
   end
 
 
+
   def place_ships_ai
     trial_coordinates = []
 

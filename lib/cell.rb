@@ -28,7 +28,7 @@ def fired_upon?
 end
 
 def fire_upon
-  if empty? == false && fired_upon? == false
+  if !empty? && !fired_upon?
     @ship.hit
     @fired_at = true
   else
@@ -38,13 +38,13 @@ end
 
 def render(show_ship = false)
   case
-    when empty? == false && @ship.sunk? == true
+    when !empty?  && @ship.sunk?
       @status = 'X'
-    when empty? == false && fired_upon? == true
+    when !empty? && fired_upon?
       @status = 'H'
-    when empty? == true && fired_upon? == true
+    when empty? && fired_upon?
       @status = 'M'
-    when empty? == false && show_ship == true
+    when !empty? && show_ship == true
       @status = 'S'
     else
       @status

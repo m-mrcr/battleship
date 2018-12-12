@@ -1,9 +1,7 @@
 require './lib/cell'
 class Board
 
-  attr_reader :cells,
-              :letter_coordinates,
-              :number_coordinates
+  attr_reader :cells
 
   def initialize
     @cells = Hash.new
@@ -14,19 +12,21 @@ class Board
     letter_coordinates = ("A".."D").to_a
     number_coordinates = (1..4).to_a
 
-      letter_coordinates.each do |letter|
+    letter_coordinates.each do |letter|
 
-        number_coordinates.each do |number|
-          coordinate = "#{letter}#{number}"
-          @cells[coordinate] = Cell.new(coordinate)
-        end
+      number_coordinates.each do |number|
+        coordinate = "#{letter}#{number}"
+        @cells[coordinate] = Cell.new(coordinate)
       end
-  @cells
-  end
+    end
+    @cells
+  end #end of method
+
 
   def valid_coordinate?(coordinate)
     cells.has_key?(coordinate)
   end
+
 
   def get_orientation(coordinates)
     letters = coordinates.map do |coordinate|
@@ -47,57 +47,42 @@ class Board
       return :diagonal
     end
 
-  end
+  end #end of method
 
   def are_the_coordinates_in_the_board?(coordinates)
     if coordinates.all? do |coordinate| #test if all coords are in board
       valid_coordinate?(coordinate)
+      end #end of do
+      return true
+    else
+      return false
+    end #end of if
+  end #end of method
+
+
+  def are_there_already_ships_here?(coordinates)
+    if coordinates.any? do |coordinate| #test if any of these cells has a ship already
+      !@cells[coordinate].empty?
       end
       return true
     else
       return false
     end
-  end
+  end #end of method
 
-
-  def valid_placement?(ship, coordinates)
-
-    if are_the_coordinates_in_the_board?(coordinates) == false
-      return false
-    end
-    
-    if ship.length != coordinates.length   #test if coords are the right length
-      return false
-    end
-
-    if coordinates.any? do |coordinate| #test if any has a ship already
-      @cells[coordinate].ship != nil
-      end
-      return false
-    end
-
-
+  def are_the_coordinates_consecutive?(coordinates)
     orientation = get_orientation(coordinates)
 
-    letters = coordinates.map do |coordinate|
-      coordinate[0].ord
-    end
-    numbers = coordinates.map do |coordinate|
-      coordinate[1].to_i
-    end
+   letters = coordinates.map do |coordinate|
+     coordinate[0].ord
+   end
+   numbers = coordinates.map do |coordinate|
+     coordinate[1].to_i
+   end
 
 
-    if orientation == :horizontal
-       numbers.each_cons(2) do |first, second|
-           if second != first + 1
-             return false
-           end
-         end
-
-         return true
-
-    elsif orientation == :vertical
-      letters.each_cons(2) do |first, second|
+   if orientation == :horizontal
+      numbers.each_cons(2) do |first, second|
           if second != first + 1
             return false
           end
@@ -105,23 +90,50 @@ class Board
 
         return true
 
-    else
+   elsif orientation == :vertical
+     letters.each_cons(2) do |first, second|
+         if second != first + 1
+           return false
+         end
+       end
+
+       return true
+
+   else
+     return false
+   end
+  end #end of method
+
+
+
+  def valid_placement?(ship, coordinates)
+    if are_the_coordinates_in_the_board?(coordinates) == false
       return false
+
+    elsif ship.length != coordinates.length   #test if coords are the right length
+      return false
+
+    elsif are_there_already_ships_here?(coordinates)
+      return false
+
+    elsif are_the_coordinates_consecutive?(coordinates) == false
+      return false
+    else
+      return true
     end
+
   end
 
 
 def place(ship, coordinates)
 
   if valid_placement?(ship, coordinates)
-
     coordinates.each do |coordinate|
       @cells[coordinate].place_ship(ship)
     end
 
-  else
-    "You can't put a ship here."
   end
+
 end
 
 

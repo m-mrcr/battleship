@@ -29,7 +29,8 @@ class BoardTest < MiniTest::Test
   def test_that_coordinates_map_to_cells
 
     board = Board.new
-    board.cells.values.all? do |value|
+
+    assert board.cells.values.all? do |value|
       value.class == Cell
     end
   end
@@ -42,7 +43,7 @@ class BoardTest < MiniTest::Test
     assert_equal true, board.valid_coordinate?("A1")
   end
 
-  def test_that_it_can_tell_if_a_coordinate_is_not_in_the_board
+  def test_it_can_validate_coordinate_as_false
 
     board = Board.new
     board.cells
@@ -52,7 +53,7 @@ class BoardTest < MiniTest::Test
     assert_equal false, board.valid_coordinate?("A22")
   end
 
-  def test_it_can_tell_if_all_coordinates_are_in_a_board
+  def test_it_can_validate_coordinate_as_true
     board = Board.new
     board.cells
 
@@ -61,23 +62,19 @@ class BoardTest < MiniTest::Test
   end
 
   def test_it_can_get_horizontal_orientation
-
-
     board = Board.new
 
     assert_equal :horizontal, board.get_orientation(["A1", "A2", "A3"])
   end
 
+
   def test_it_can_get_vertical_orientation
-
-
     board = Board.new
 
     assert_equal :vertical, board.get_orientation(["A1", "B1", "C1"])
   end
 
   def test_it_cannot_have_ships_in_diagonal_orientation
-
     board = Board.new
     cruiser = Ship.new("Cruiser", 3)
     submarine = Ship.new("Submarine", 2)
@@ -85,9 +82,7 @@ class BoardTest < MiniTest::Test
     assert_equal false, board.valid_placement?(cruiser, ["A1", "B2", "C3"])
   end
 
-  def test_that_coordinates_and_placement_match_ship_length
-
-
+  def test_that_coordinates_need_to_be_same_length_as_ship
     board = Board.new
     cruiser = Ship.new("Cruiser", 3)
     submarine = Ship.new("Submarine", 2)
@@ -95,7 +90,7 @@ class BoardTest < MiniTest::Test
     assert_equal false, board.valid_placement?(cruiser, ["A1", "A2"])
   end
 
-  def test_that_coordinates_and_placement_match_longer_ship_length
+  def test_that_in_valid_placement_coordinates_and_placement_match_ship_length
 
     board = Board.new
     cruiser = Ship.new("Cruiser", 3)
@@ -104,7 +99,16 @@ class BoardTest < MiniTest::Test
     assert_equal true, board.valid_placement?(submarine, ["A1", "A2"])
   end
 
-  def test_that_coordinates_and_placements_are_consecutive
+  def test_it_can_know_if_coordinates_are_consecutive
+    board = Board.new
+    coordinates_1 = ["C1", "D1"]
+    coordinates_2 = ["A2", "A1", "A3"]
+
+    assert_equal true, board.are_the_coordinates_consecutive?(coordinates_1)
+    assert_equal false, board.are_the_coordinates_consecutive?(coordinates_2)
+  end
+
+  def test_that_in_valid_placement_coordinates_and_placements_are_consecutive
 
     board = Board.new
     cruiser = Ship.new("Cruiser", 3)
@@ -136,6 +140,15 @@ class BoardTest < MiniTest::Test
     assert_equal true, cell_3.ship == cell_2.ship
   end
 
+  def test_it_can_tell_if_there_are_already_ships_in_a_set_of_coordinates
+    board = Board.new
+    cruiser = Ship.new("Cruiser", 3)
+    submarine = Ship.new("Submarine", 2)
+    board.place(cruiser, ["A1", "A2", "A3"])
+
+    assert_equal true, board.are_there_already_ships_here?(["A1", "A2", "A3"])
+  end
+
   def test_it_cannot_have_overlapping_ships
 
     board = Board.new
@@ -144,6 +157,13 @@ class BoardTest < MiniTest::Test
     board.place(cruiser, ["A1", "A2", "A3"])
 
     assert_equal false, board.valid_placement?(submarine, ["A1", "B1"])
+  end
+
+  def test_it_can_validate_array_of_coordinates
+    board = Board.new
+
+    assert_equal true, board.are_the_coordinates_in_the_board?(["A2", "B4", "C1"])
+    assert_equal false, board.are_the_coordinates_in_the_board?(["C2", "D3", "D5"])
   end
 
   def test_it_can_render

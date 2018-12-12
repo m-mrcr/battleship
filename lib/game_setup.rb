@@ -6,16 +6,15 @@ require './lib/player'
 require './lib/board'
 require 'pry'
 
-class Game
+class GameSetup
 
   attr_reader :computer,
-              :human,
-              :valid
+              :human
 
   def initialize
-    @computer = Player.new('computer')
-    @human = Player.new('human')
-    self.welcome
+    @computer = Player.new(:computer)
+    @human = Player.new(:human)
+
   end
 
   def welcome
@@ -24,18 +23,13 @@ class Game
     input = gets.chomp
 
       if input == "p" || input == "P"
-        self.start_game
+        setup
       elsif input == 'q' || input == "Q"
         exit
       else
         puts 'INVALID INPUT'
-        self.welcome
+        welcome
       end
-  end
-
-  def start_game
-    @computer = Player.new(:computer)
-    @player = Player.new(:human)
   end
 
 
@@ -48,7 +42,7 @@ class Game
 def place_ships_user
     puts "I have laid out my ships on the grid."
     puts "You now need to lay out your two ships."
-    puts "The Cruiser is two units long and the Submarine is three units long."
+    puts "The Cruiser is three units long and the Submarine is two units long."
     puts @human.board.render
 
     loop do
@@ -83,7 +77,8 @@ def place_ships_user
   puts @human.board.render(true)
 
   end
-  
+
+
 
   def place_ships_ai
     trial_coordinates = []
@@ -94,9 +89,8 @@ def place_ships_user
 
         trial_coordinates = @computer.board.cells.keys.sample(ship.length)
 
-        if @computer.board.valid_placement?(ship, trial_coordinates) == true
+        if @computer.board.valid_placement?(ship, trial_coordinates)
           @computer.board.place(ship, trial_coordinates)
-          puts " The computer has placed its #{name_of_ship}."
           break
         end
 

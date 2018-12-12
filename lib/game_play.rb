@@ -17,7 +17,7 @@ class GamePlay
 
 
     def display_boards
-      sleep(1)
+      sleep(2)
       puts "=============COMPUTER BOARD============="
       puts @computer.board.render
       puts "==============PLAYER BOARD=============="

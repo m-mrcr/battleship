@@ -16,5 +16,28 @@ class Player
   def add_ships
     @ships = {submarine: Ship.new("Submarine", 2), cruiser: Ship.new("Cruiser", 3) }
   end
-  
+
+
+
+
+
+
+  def place_ships_ai
+    trial_coordinates = []
+
+    ships.each do |name_of_ship, ship|
+
+      loop do
+
+        trial_coordinates = board.cells.keys.sample(ship.length)
+
+        if board.valid_placement?(ship, trial_coordinates)
+          board.place(ship, trial_coordinates)
+          break
+        end
+
+      end #end of loop do
+    end #ends each
+  end #end of place ships ai method
+
 end

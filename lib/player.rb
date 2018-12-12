@@ -18,9 +18,24 @@ class Player
   end
 
 
+  def place_ships_loop
 
+    ships.each do |name, ship|
 
+      loop do
+        puts "Enter the coordinates for the #{ship.name} which is #{ship.length} spaces long. \n"
+        input = gets.chomp.upcase.split
 
+        if board.valid_placement?(ship, input)
+          board.place(ship, input)
+          board.render(true)
+          break
+        else
+          puts "Those are invalid coordinates. Please try again."
+        end
+      end
+    end #end loop
+end #ends place_ships_loop
 
   def place_ships_ai
     trial_coordinates = []

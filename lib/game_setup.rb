@@ -32,8 +32,6 @@ class GameSetup
   end
 
   def setup
-    custom_board_size
-    create_boards
     place_ships_ai
     place_ships_user
   end
@@ -51,18 +49,6 @@ class GameSetup
     puts @human.board.render(true)
   end #ends place_ships_user
 
-  def custom_board_size
-    puts "You can choose the board size, limited to 26X26."
-    puts "Input a letter for the height: "
-    @height = gets.chomp.upcase
-    puts "Now input a number for width: "
-    @width = gets.chomp.upcase.to_i
 
-  end
-
-  def create_boards
-    @human.board.create_cells(@height, @width)
-    @computer.board.create_cells(@height, @width)
-  end
 
 end #ends class

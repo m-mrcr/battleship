@@ -35,7 +35,7 @@ class GamePlay
           @computer.board.cells[input].fire_upon
           @already_fired_upon_coordinates_human << input
           break
-        elsif @already_fired_upon_coordinates_human.include?(input) == true
+        elsif @already_fired_upon_coordinates_human.include?(input) 
           puts "This coordinate has already been fired upon. Please choose another."
           input = gets.upcase.chomp
           next

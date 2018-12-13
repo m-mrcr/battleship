@@ -18,6 +18,7 @@ loop do
     gameplay.display_boards
     gameplay.end_game_announcement
     game = GameSetup.new
+    game.welcome
     game.setup
     gameplay = GamePlay.new(game.human, game.computer)
   end

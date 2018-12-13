@@ -35,7 +35,7 @@ class GamePlay
           @computer.board.cells[input].fire_upon
           @already_fired_upon_coordinates_human << input
           break
-        elsif @already_fired_upon_coordinates_human.include?(input) 
+        elsif @already_fired_upon_coordinates_human.include?(input)
           puts "This coordinate has already been fired upon. Please choose another."
           input = gets.upcase.chomp
           next
@@ -112,7 +112,7 @@ class GamePlay
   def end_game_announcement
     if player_won
       puts "\n ------------ \n \n Congratulations, you won! \n \n ------------ \n"
-    elsif computer_won == true
+    elsif computer_won
       puts "\n ------------ \n \n I won. Better luck next time. \n \n ------------ \n"
     end
   end

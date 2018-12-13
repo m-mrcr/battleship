@@ -139,20 +139,27 @@ end
   def render(show_ships = false)
 
     first_row = "  1 2 3 4 \nA"
-      third_row = "\nB"
-      fourth_row = "\nC"
-      fifth_row = "\nD"
-       without_cells = [first_row, third_row, fourth_row, fifth_row]
-      with_cells = []
-       cells =  @cells.values
-       cells.each do |cell|
-       if show_ships == false
+    third_row = "\nB"
+    fourth_row = "\nC"
+    fifth_row = "\nD"
+
+    without_cells = [first_row, third_row, fourth_row, fifth_row]
+    with_cells = []
+
+    cells =  @cells.values
+
+    cells.each do |cell|
+
+      if show_ships == false
         with_cells << cell.render
       else
         with_cells << cell.render(true)
       end
+
       end
+
       rendered_cells = with_cells.each_slice(4).to_a
+      
       without_cells.zip(rendered_cells).flatten.join(' ')
 
   end

@@ -35,7 +35,7 @@ class Player
         end
       end
     end #end loop
-end #ends place_ships_loop
+  end #ends place_ships_loop
 
   def place_ships_ai
     trial_coordinates = []
